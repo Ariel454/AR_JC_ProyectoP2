@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AR_JC_ProyectoP2.GestionUsuarios"
+             Title="GestionUsuarios">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Bienvenido," FontSize="24" />
+            <Label x:Name="NombreLabel" FontSize="18" />
+            <!-- Aquí puedes agregar elementos de interfaz de usuario para las operaciones CRUD -->
+            <ListView x:Name="UserListView" ItemSelected="OnUserSelected">
+                <!-- Define el diseño de cada elemento de la lista -->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding NombreUsuario}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Agregar Usuario" Clicked="OnAddUserClicked" />
+            <Button Text="Editar Usuario" Clicked="OnEditUserClicked" />
+            <Button Text="Eliminar Usuario" Clicked="OnDeleteUserClicked" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AR_JC_ProyectoP2.CrearUsuario"
+             Title="CrearUsuario">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Crear Nuevo Usuario" FontSize="24" />
+            <Entry Placeholder="Nombre de usuario" x:Name="UserNameEntry" />
+            <Entry Placeholder="Nombre completo" x:Name="NombreEntry" />
+            <Entry Placeholder="Correo electrónico" Keyboard="Email" x:Name="emailEntry" />
+            <Entry Placeholder="Contraseña" IsPassword="True" x:Name="passwordEntry" />
+            <Entry Placeholder="Confirmar contraseña" IsPassword="True" x:Name="confirmPasswordEntry" />
+            <Picker x:Name="RolPicker" Title="Rol" SelectedIndexChanged="OnRolPickerSelectedIndexChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Usuario</x:String>
+                        <x:String>Administrador</x:String>
+                        <x:String>Moderador</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <Button Text="Crear" Clicked="OnCreateClicked" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

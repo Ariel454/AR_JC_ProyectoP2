@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AR_JC_ProyectoP2.Login"
+             Title="Login">
+    <StackLayout>
+        <Entry Placeholder="Usuario" x:Name="UserNameEntry" />
+        <Entry Placeholder="Contraseña" IsPassword="True" x:Name="passwordEntry" />
+        <Button Text="Iniciar sesión" Clicked="OnLoginButtonClicked" />
+        <Button Text="Registrarse" Clicked="OnRegisterButtonClicked" />
+    </StackLayout>
+</ContentPage>
