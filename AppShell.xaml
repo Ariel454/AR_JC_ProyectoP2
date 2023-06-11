@@ -6,14 +6,14 @@
     xmlns:local="clr-namespace:AR_JC_ProyectoP2"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Login"
+        <ShellContent
+        Title="Ingresar"
         ContentTemplate="{DataTemplate local:Login}"
         Route="Login" />
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        <ShellContent
+        Title="Registrarse"
+        ContentTemplate="{DataTemplate local:RegisterPage}"
+        Route="RegisterPage" />
 
 </Shell>

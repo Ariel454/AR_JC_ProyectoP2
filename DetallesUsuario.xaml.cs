@@ -16,9 +16,13 @@ public partial class DetallesUsuario : ContentPage
         if (usuario.Rol == 0) {
             RolNombre = "Administrador";
         }
-        else
+        else if(usuario.Rol == 1)
         {
             RolNombre = "Moderador";
+        }
+        else
+        {
+            RolNombre = "Usuario";
         }
         RolLabel.Text = RolNombre;
 

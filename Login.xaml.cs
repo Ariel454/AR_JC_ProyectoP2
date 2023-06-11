@@ -22,7 +22,15 @@ public partial class Login : ContentPage
         if (usuario != null)
         {
             // Datos de usuario válidos, navegar a la siguiente página
-           await Navigation.PushAsync(new GestionUsuarios(usuario));
+            switch (usuario.Rol) {
+                case (0):
+                    await Navigation.PushAsync(new GestionUsuarios(usuario));
+                    break;
+                default:
+                    await DisplayAlert("Alerta", "Usted no es administrador.", "OK");
+                    break;
+            }
+            
         }
         else
         {

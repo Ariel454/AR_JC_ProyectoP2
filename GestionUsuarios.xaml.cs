@@ -52,6 +52,8 @@ public partial class GestionUsuarios : ContentPage
             // Mostrar mensaje de error si no se ha seleccionado ningún usuario
             DisplayAlert("Error", "Seleccione un usuario para editar", "OK");
         }
+        UserListView.ItemsSource = null;
+        UserListView.ItemsSource = usuarios;
     }
 
     private async void OnDeleteUserClicked(object sender, EventArgs e)

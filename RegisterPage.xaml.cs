@@ -17,7 +17,7 @@ public partial class RegisterPage : ContentPage
         string Contrasenia = passwordEntry.Text;
         string ConfirmPassword = confirmPasswordEntry.Text;
         string Correo = emailEntry.Text;
-        int Rol=0;
+        int Rol=2;
 
         // Validar que los campos no estén vacíos y que las contraseñas coincidan
         if (string.IsNullOrWhiteSpace(NombreUsuario) || string.IsNullOrWhiteSpace(Contrasenia) || string.IsNullOrWhiteSpace(ConfirmPassword))
@@ -34,6 +34,21 @@ public partial class RegisterPage : ContentPage
 
         using (var context = new ApplicationDbContext())
         {
+
+            bool usuarioExistente = context.Usuario.Any(u => u.NombreUsuario == NombreUsuario);
+            bool correoExistente = context.Usuario.Any(u => u.Correo == Correo);
+            if (usuarioExistente) 
+            {
+                DisplayAlert("Error", "El nombre de usuario ya existe, por favor escriba uno nuevo.", "OK");
+                return;
+            }
+
+            if (correoExistente)
+            {
+                DisplayAlert("Error", "El correo ya está registrado, por favor ingrese uno nuevo o inicie sesión.", "OK");
+                return;                
+            }
+
             var newUsuario = new Usuario
             {
                 NombreUsuario = NombreUsuario,

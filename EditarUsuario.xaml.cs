@@ -37,6 +37,7 @@ public partial class EditarUsuario : ContentPage
     {
         using (var context = new ApplicationDbContext())
         {
+
             // Obtiene el usuario desde el contexto y actualiza sus propiedades
             var updatedUser = context.Usuario.FirstOrDefault(u => u.ID_User == user.ID_User);
             if (updatedUser != null)
