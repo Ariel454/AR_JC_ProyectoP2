@@ -26,11 +26,11 @@ public partial class Login : ContentPage
                 case (0):
                     await Navigation.PushAsync(new GestionUsuarios(usuario));
                     break;
-                case (2):
-                    await Navigation.PushAsync(new Comentarios(usuario));
+                case (1):
+                    await Navigation.PushAsync(new GestionarPeliculas());
                     break;
-                default:
-                    await DisplayAlert("Alerta", "Usted no es administrador.", "OK");
+                case (2):
+                    await Navigation.PushAsync(new MainPage(usuario));
                     break;
             }
             

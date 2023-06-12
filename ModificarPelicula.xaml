@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AR_JC_ProyectoP2.ModificarPelicula"
+             Title="ModificarPelicula">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Editar Pelicula" FontSize="24" />
+            <Entry Placeholder="Nombre" x:Name="NombreEntry" />
+            <Entry Placeholder="Descripcion: " x:Name="DescripcionEntry" />
+            <Entry Placeholder="Anio: " x:Name="AnioEntry" Keyboard="Numeric" />
+            <Entry Placeholder="Poster: " x:Name="PosterEntry" />
+            <Picker x:Name="GeneroPicker" Title="Genero" SelectedIndexChanged="OnRolPickerSelectedIndexChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Drama</x:String>
+                        <x:String>Terror</x:String>
+                        <x:String>Comedia</x:String>
+                        <x:String>Thriller</x:String>
+                        <x:String>Acción</x:String>
+                        <x:String>Aventura</x:String>
+                        <x:String>Ciencia Ficción</x:String>
+                        <x:String>Familiar</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <Button Text="Guardar Cambios" Clicked="OnSaveClicked" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

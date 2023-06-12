@@ -1,24 +1,28 @@
-﻿namespace AR_JC_ProyectoP2;
+﻿using AR_JC_ProyectoP2.Data;
+using AR_JC_ProyectoP2.Models;
+
+namespace AR_JC_ProyectoP2;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
+    int count = 0;
+    private ApplicationDbContext context;
+    private Usuario usuario;
 
-	public MainPage()
-	{
-		InitializeComponent();
-	}
+    public MainPage(Usuario usuario)
+    {
+        InitializeComponent();
+        this.usuario = usuario;
+    }
 
-	private void OnCounterClicked(object sender, EventArgs e)
-	{
-		count++;
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
 
-		SemanticScreenReader.Announce(CounterBtn.Text);
-	}
+    async private void Button_Clicked(object sender, EventArgs e)
+    {
+        var button = (Button)sender;
+        var pelicula = button.BindingContext as Pelicula;
+        await Navigation.PushAsync(new CrearResena(pelicula, usuario));
+    }
 }
+
 

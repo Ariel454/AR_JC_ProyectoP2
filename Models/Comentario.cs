@@ -14,8 +14,12 @@ namespace AR_JC_ProyectoP2.Models
         [Key]
         public int ID_Comentario { get; set; }
 
+        [ForeignKey("Resena")]
+        public int ID_ResenaF{ get; set; }
+
         [ForeignKey("Usuario")]
         public int ID_UserF { get; set; }
+
         public string Titulo { get; set; }
         public string Cuerpo { get; set; }
         public string RutaArchivo { get; set; }

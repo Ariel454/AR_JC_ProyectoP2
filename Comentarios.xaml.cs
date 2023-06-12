@@ -14,7 +14,7 @@ namespace AR_JC_ProyectoP2
         private ICommand guardarComentarioCommand;
         private Usuario usuario; 
 
-        public Comentarios(Usuario usuario)
+        public Comentarios(Usuario usuario, Resena resena)
         {
             InitializeComponent();
             this.usuario = usuario;
@@ -66,6 +66,8 @@ namespace AR_JC_ProyectoP2
                 dbContext.Comentario.Add(comentario);
                 dbContext.SaveChanges();
             }
+            // Muestra un mensaje de éxito
+            DisplayAlert("Éxito", "Se agregó el comentario", "OK");
         }
     }
 }

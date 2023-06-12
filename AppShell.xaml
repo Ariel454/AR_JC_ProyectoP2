@@ -6,14 +6,33 @@
     xmlns:local="clr-namespace:AR_JC_ProyectoP2"
     Shell.FlyoutBehavior="Disabled">
 
-        <ShellContent
-        Title="Ingresar"
-        ContentTemplate="{DataTemplate local:Login}"
-        Route="Login" />
+    <ShellContent
+            Title="Ingresar"
+            ContentTemplate="{DataTemplate local:Login}"
+            Route="Login" />
+    
+    
+    <ShellContent
+            Title="Menu"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
 
-        <ShellContent
-        Title="Registrarse"
-        ContentTemplate="{DataTemplate local:RegisterPage}"
-        Route="RegisterPage" />
+    <TabBar>
+            <ShellContent
+            Title="Añadir peliculas"
+            ContentTemplate="{DataTemplate local:CrearPelicula}"
+            Route="CrearPelicula" />
+            
+            <ShellContent
+            Title="Gestionar peliculas"
+            ContentTemplate="{DataTemplate local:GestionarPeliculas}"
+            Route="GestionarPeliculas" />
+    </TabBar>
+
+    <ShellContent
+            Title="Registrarse"
+            ContentTemplate="{DataTemplate local:RegisterPage}"
+            Route="RegisterPage" />
+
 
 </Shell>
