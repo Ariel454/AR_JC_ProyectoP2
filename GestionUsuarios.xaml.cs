@@ -12,7 +12,7 @@ public partial class GestionUsuarios : ContentPage
     {
 		InitializeComponent();
         context = new ApplicationDbContext();
-        NombreLabel.Text = "Bienvenido, " + usuario.Nombre;
+        NombreLabel.Text = "Bienvenido usuario Administrador: " + usuario.Nombre;
 
         // Cargar los usuarios desde la base de datos
         usuarios = context.Usuario.ToList();
