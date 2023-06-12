@@ -18,5 +18,7 @@ namespace AR_JC_ProyectoP2.Models
         public string NombreUsuario { get; set; }
         public string Contrasenia { get; set; }
         public string Correo { get; set; }
+
+        public ICollection<Comentario> Comentarios { get; set; }
     }
 }
