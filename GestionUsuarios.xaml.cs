@@ -15,7 +15,7 @@ public partial class GestionUsuarios : ContentPage
         NombreLabel.Text = "Bienvenido usuario Administrador: " + usuario.Nombre;
 
         // Cargar los usuarios desde la base de datos
-        usuarios = context.Usuario.ToList();
+        usuarios = context.Usuarios.ToList();
 
         // Establecer la lista de usuarios como origen de datos del ListView
         UserListView.ItemsSource = usuarios;
@@ -69,7 +69,7 @@ public partial class GestionUsuarios : ContentPage
             if (result)
             {
                 // Eliminar el usuario de la base de datos
-                context.Usuario.Remove(usuarioSeleccionado);
+                context.Usuarios.Remove(usuarioSeleccionado);
                 context.SaveChanges();
 
                 // Actualizar la lista de usuarios y refrescar el ListView

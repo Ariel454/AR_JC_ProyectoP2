@@ -20,6 +20,6 @@ namespace AR_JC_ProyectoP2.Models
         public int anio { get; set; }
         public string Poster { get; set; }
 
-
+        public ICollection<Resena> Resenas { get; set; }
     }
 }

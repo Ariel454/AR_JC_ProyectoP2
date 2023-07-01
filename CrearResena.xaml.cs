@@ -4,18 +4,15 @@ namespace AR_JC_ProyectoP2;
 
 public partial class CrearResena : ContentPage
 {
-    private Pelicula peli;
-    public List<string> NombresPeliculas { get; set; }
-    private readonly ApplicationDbContext _context;
-
-    public CrearResena(Pelicula peli, Usuario usuario)
+    public Pelicula pelicula;
+    public Usuario usuario;
+    private ApplicationDbContext context;
+    public CrearResena(Pelicula peli, Usuario user)
     {
         InitializeComponent();
-        // Obtener los nombres de las películas desde ApplicationDbContext
-        NombresPeliculas = _context.Peliculas.Select(p => p.Nombre).ToList();
-
-        // Asignar la lista como origen de datos del Picker
-        PeliculaPicker.ItemsSource = NombresPeliculas;
+        context = new ApplicationDbContext();
+        this.pelicula = peli;
+        this.usuario = user;
     }
     private void OnRolPickerSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -27,7 +24,8 @@ public partial class CrearResena : ContentPage
         // Obtener los valores ingresados en los Entry y el Picker
         string Titulo = TituloEntry.Text;
         string Texto = TextoEntry.Text;
-
+        int IdPelicula = pelicula.IdPelicula;
+        int ID_User = usuario.ID_User;
         // Validar que los campos no estén vacíos y que las contraseñas coincidan
         if (string.IsNullOrWhiteSpace(Titulo) || string.IsNullOrWhiteSpace(Texto))
         {
@@ -40,17 +38,23 @@ public partial class CrearResena : ContentPage
             var newResena = new Resena
             {
                 Titulo = Titulo,
-                Texto = Texto
+                Texto = Texto,
+                IdPeliculaP = IdPelicula,
+                ID_UserP = ID_User
             };
 
-            //context.Resenas.Add(newResena);
+            context.Resenas.Add(newResena);
             context.SaveChanges();
 
-
+            DisplayAlert("Éxito", "La pelicula se publicó correctamente.", "OK");
+            Navigation.PopAsync();
+            Navigation.PushAsync(new ResenaPorPelicula(newResena.IdPeliculaP, context.Resenas.ToList<Resena>()));
 
         }
-
+        /*ESTO LO BORRÉ PORQUE ESTOY PROBANDO EL ORDEN DEL FINAL PARA RECUPERAR EL USUARIO Y LA PELI
         DisplayAlert("Éxito", "La pelicula se publicó correctamente.", "OK");
         Navigation.PopAsync();
+        Navigation.PushAsync(new ResenaPorPelicula());
+        */
     }
 }

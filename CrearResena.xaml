@@ -8,9 +8,6 @@
             <Label Text="Crear Nueva reseña" FontSize="24" />
             <Entry Placeholder="Titulo: " x:Name="TituloEntry" />
             <Entry Placeholder="Texto: " x:Name="TextoEntry" />
-            <Picker x:Name="PeliculaPicker" Title="Película" SelectedIndexChanged="OnRolPickerSelectedIndexChanged"
-                ItemsSource="{Binding NombresPeliculas}">
-            </Picker>
             <Button Text="Crear" Clicked="OnCreateClicked" />
         </StackLayout>
     </ContentPage.Content>

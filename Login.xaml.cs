@@ -9,31 +9,33 @@ public partial class Login : ContentPage
 
 
     public Login()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         context = new ApplicationDbContext();
     }
 
     async void OnLoginButtonClicked(object sender, EventArgs e)
     {
+
         string NombreUsuario = UserNameEntry.Text;
         string Contrasenia = passwordEntry.Text;
-        var usuario = context.Usuario.FirstOrDefault(u => u.NombreUsuario == NombreUsuario && u.Contrasenia == Contrasenia);
+        var usuario = context.Usuarios.FirstOrDefault(u => u.NombreUsuario == NombreUsuario && u.Contrasenia == Contrasenia);
         if (usuario != null)
         {
             // Datos de usuario válidos, navegar a la siguiente página
-            switch (usuario.Rol) {
+            switch (usuario.Rol)
+            {
                 case (0):
                     await Navigation.PushAsync(new GestionUsuarios(usuario));
-                    break;
-                case (1):
-                    await Navigation.PushAsync(new GestionarPeliculas());
                     break;
                 case (2):
                     await Navigation.PushAsync(new MainPage(usuario));
                     break;
+                default:
+                    await DisplayAlert("Alerta", "Usted no es administrador.", "OK");
+                    break;
             }
-            
+
         }
         else
         {
