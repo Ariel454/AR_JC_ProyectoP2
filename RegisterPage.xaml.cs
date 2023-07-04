@@ -35,8 +35,8 @@ public partial class RegisterPage : ContentPage
         using (var context = new ApplicationDbContext())
         {
 
-            bool usuarioExistente = context.Usuarios.Any(u => u.NombreUsuario == NombreUsuario);
-            bool correoExistente = context.Usuarios.Any(u => u.Correo == Correo);
+            bool usuarioExistente = context.Usuario.Any(u => u.NombreUsuario == NombreUsuario);
+            bool correoExistente = context.Usuario.Any(u => u.Correo == Correo);
             if (usuarioExistente) 
             {
                 DisplayAlert("Error", "El nombre de usuario ya existe, por favor escriba uno nuevo.", "OK");
@@ -58,7 +58,7 @@ public partial class RegisterPage : ContentPage
                 Rol = Rol
             };
 
-            context.Usuarios.Add(newUsuario);
+            context.Usuario.Add(newUsuario);
             context.SaveChanges();
         }
 

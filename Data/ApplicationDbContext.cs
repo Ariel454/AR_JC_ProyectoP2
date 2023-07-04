@@ -11,9 +11,9 @@ namespace AR_JC_ProyectoP2.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Pelicula> Peliculas { get; set; }
-        public DbSet<Resena> Resenas { get; set; }
+        public DbSet<Resena> Resena { get; set; }
         public DbSet<Comentario> Comentario { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

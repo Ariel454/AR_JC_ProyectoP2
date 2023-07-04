@@ -2,38 +2,32 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AR_JC_ProyectoP2.Models"
-             x:Class="AR_JC_ProyectoP2.ResenaPorPelicula"
-             Title="ResenaPorPelicula">
+             xmlns:vm="clr-namespace:AR_JC_ProyectoP2.ViewModels"
+             x:Class="AR_JC_ProyectoP2.ResenaPorPelicula">
 
+    <ContentPage.BindingContext>
+        <vm:ResenaPorPeliculaViewModel />
+    </ContentPage.BindingContext>
 
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <Label Text="Bienvenido," FontSize="24" />
-                <Label x:Name="NombreLabel" FontSize="18" />
-                <!-- Aquí puedes agregar elementos de interfaz de usuario para las operaciones CRUD -->
-                <CollectionView x:Name="collectionView">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Orientation="Vertical">
-                                <Image Source="{Binding Poster}" WidthRequest="200" HeightRequest="320" />
-                                <Label Text="{Binding Nombre}" />
-                                <CollectionView ItemsSource="{Binding Resenas}">
-                                    <CollectionView.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackLayout>
-                                                <Label Text="{Binding Titulo}" />
-                                                <Label Text="{Binding Texto}" />
-                                            </StackLayout>
-                                        </DataTemplate>
-                                    </CollectionView.ItemTemplate>
-                                </CollectionView>
+                <!-- Mostrar el título centrado de la película -->
+                <Label Text="{Binding Pelicula.Nombre}" HorizontalOptions="Center" FontSize="42" FontAttributes="Bold" />
 
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                <!-- Mostrar el póster de la película -->
+                <Image Source="{Binding Pelicula.Poster}" WidthRequest="200" HeightRequest="320" HorizontalOptions="Center" />
+
+                <!-- Mostrar la descripción de la película -->
+                <Label Text="{Binding Pelicula.Descripcion}" HorizontalOptions="Center" FontSize="18" />
+
+                <!-- Agregar aquí el código para mostrar otros objetos del proyecto -->
+                
+                
+
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
+        
+
 </ContentPage>

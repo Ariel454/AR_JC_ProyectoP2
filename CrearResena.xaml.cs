@@ -43,12 +43,12 @@ public partial class CrearResena : ContentPage
                 ID_UserP = ID_User
             };
 
-            context.Resenas.Add(newResena);
+            context.Resena.Add(newResena);
             context.SaveChanges();
 
-            DisplayAlert("Éxito", "La pelicula se publicó correctamente.", "OK");
+            DisplayAlert("Éxito", "La reseña se publicó correctamente.", "OK");
             Navigation.PopAsync();
-            Navigation.PushAsync(new ResenaPorPelicula(newResena.IdPeliculaP, context.Resenas.ToList<Resena>()));
+            Navigation.PushAsync(new ResenaPorPelicula(pelicula));
 
         }
         /*ESTO LO BORRÉ PORQUE ESTOY PROBANDO EL ORDEN DEL FINAL PARA RECUPERAR EL USUARIO Y LA PELI

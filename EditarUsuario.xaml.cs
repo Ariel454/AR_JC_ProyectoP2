@@ -39,7 +39,7 @@ public partial class EditarUsuario : ContentPage
         {
 
             // Obtiene el usuario desde el contexto y actualiza sus propiedades
-            var updatedUser = context.Usuarios.FirstOrDefault(u => u.ID_User == user.ID_User);
+            var updatedUser = context.Usuario.FirstOrDefault(u => u.ID_User == user.ID_User);
             if (updatedUser != null)
             {
                 updatedUser.Nombre = NombreEntry.Text;

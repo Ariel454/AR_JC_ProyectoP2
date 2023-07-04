@@ -1,5 +1,7 @@
 using AR_JC_ProyectoP2.Data;
 using AR_JC_ProyectoP2.Models;
+using Newtonsoft.Json;
+using System.Data;
 
 namespace AR_JC_ProyectoP2;
 
@@ -16,33 +18,42 @@ public partial class Login : ContentPage
 
     async void OnLoginButtonClicked(object sender, EventArgs e)
     {
-
-        string NombreUsuario = UserNameEntry.Text;
-        string Contrasenia = passwordEntry.Text;
-        var usuario = context.Usuarios.FirstOrDefault(u => u.NombreUsuario == NombreUsuario && u.Contrasenia == Contrasenia);
-        if (usuario != null)
+        string user = UserNameEntry.Text;
+        string pass = passwordEntry.Text;
+        using (var client = new HttpClient())
         {
-            // Datos de usuario válidos, navegar a la siguiente página
-            switch (usuario.Rol)
+            var url = "https://localhost:7171/Usuario/listar";
+            var response = await client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
             {
-                case (0):
-                    await Navigation.PushAsync(new GestionUsuarios(usuario));
-                    break;
-                case (2):
-                    await Navigation.PushAsync(new MainPage(usuario));
-                    break;
-                default:
-                    await DisplayAlert("Alerta", "Usted no es administrador.", "OK");
-                    break;
+                var content = await response.Content.ReadAsStringAsync();
+                var listaUsuarios = JsonConvert.DeserializeObject<List<Usuario>>(content);
+                var usuario = listaUsuarios.FirstOrDefault(u => u.NombreUsuario == user && u.Contrasenia == pass);
+                if (usuario != null)
+                {
+                    // Datos de usuario válidos, navegar a la siguiente página
+                    switch (usuario.Rol)
+                    {
+                        case 0:
+                            await Navigation.PushAsync(new GestionUsuarios(usuario));
+                            break;
+                        case 2:
+                            await Navigation.PushAsync(new MainPage(usuario));
+                            break;
+                        default:
+                            await DisplayAlert("Alerta", "Usted no es administrador.", "OK");
+                            break;
+                    }
+                }
+                else
+                {
+                    // Credenciales inválidas, mostrar mensaje de error
+                    await DisplayAlert("Error", "Credenciales inválidas", "OK");
+                }
             }
-
-        }
-        else
-        {
-            // Credenciales inválidas, mostrar mensaje de error
-            await DisplayAlert("Error", "Credenciales inválidas", "OK");
         }
     }
+
 
     async void OnRegisterButtonClicked(object sender, EventArgs e)
     {
