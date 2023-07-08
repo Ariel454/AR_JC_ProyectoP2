@@ -46,7 +46,7 @@ public partial class RegisterPage : ContentPage
 
         using (var client = new HttpClient())
         {
-            var url = "https://localhost:7144/Usuario/RegistrarUsuario?Nombre=" + Nombre + "&Rol=2&NombreUser=" + NombreUsuario + "&Contrasena=" + Contrasenia + "&Correo=" + Correo;
+            var url = "https://localhost:7274/Usuario/RegistrarUsuario?Nombre=" + Nombre + "&Rol=2&NombreUser=" + NombreUsuario + "&Contrasena=" + Contrasenia + "&Correo=" + Correo;
             var response = await client.PostAsync(url, content);
 
             if (response.IsSuccessStatusCode)

@@ -36,7 +36,7 @@ public partial class ComentarioPorResena : ContentPage
 
         using (var client = new HttpClient())
         {
-            var url = "https://localhost:7144/Comentario/ListarComentarios";
+            var url = "https://localhost:7274/Comentario/ListarComentarios";
             var response = await client.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
@@ -80,8 +80,7 @@ public partial class ComentarioPorResena : ContentPage
         using (var client = new HttpClient())
         {
             await DisplayAlert("Éxito", "fecha: "+fechaComentario.ToString(), "OK");
-            //ARREGLAR LA FECHA SI ES QUE QUIERO QUE FUNCIONE JEJEX
-            var url = "https://localhost:7144/Comentario/AgregarComentario?idUsuario=" + ID_User + "&idResena=" + IdResena + "&Cuerpo=" + cuerpo + "&FechaComentario=" + fechaComentarioFormatted;
+            var url = "https://localhost:7274/Comentario/AgregarComentario?idUsuario=" + ID_User + "&idResena=" + IdResena + "&Cuerpo=" + cuerpo + "&FechaComentario=" + fechaComentarioFormatted;
             var response = await client.PostAsync(url, content);
 
             if (response.IsSuccessStatusCode)

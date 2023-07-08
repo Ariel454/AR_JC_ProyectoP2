@@ -29,7 +29,7 @@ namespace AR_JC_ProyectoP2.ViewModels
                 OnPropertyChanged();
             }
         }
-
+        /*
         public UsuariosViewModel()
         {
             // Inicializar la lista de usuarios
@@ -51,7 +51,7 @@ namespace AR_JC_ProyectoP2.ViewModels
                 }
             }
         }
-
+        
         public void ActualizarUsuarios()
         {
             // Aquí iría el código para actualizar los usuarios desde la API o cualquier otra fuente de datos
@@ -69,7 +69,7 @@ namespace AR_JC_ProyectoP2.ViewModels
                 }
             }
         }
-
+        */
 
         // Implementación de la interfaz INotifyPropertyChanged para notificar cambios de propiedad
         public event PropertyChangedEventHandler PropertyChanged;

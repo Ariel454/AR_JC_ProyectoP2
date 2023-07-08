@@ -49,12 +49,12 @@ namespace AR_JC_ProyectoP2
 
             using (var client = new HttpClient())
             {
-                var url = "https://localhost:7144/Resena/AnadirResena?Titulo="+Titulo+"&Descripcion="+Texto+"&idPeliculaP="+IdPelicula+"&idUserP="+ID_User;
+                var url = "https://localhost:7274/Resena/AnadirResena?Titulo=" + Titulo+"&Descripcion="+Texto+"&idPeliculaP="+IdPelicula+"&idUserP="+ID_User;
                 var response = await client.PostAsync(url, content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var url2 = "https://localhost:7144/Resena/ListarResenas";
+                    var url2 = "https://localhost:7274/Resena/ListarResenas";
                     var response2 = await client.GetAsync(url2);
                     if (response2.IsSuccessStatusCode)
                     {

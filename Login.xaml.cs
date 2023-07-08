@@ -23,7 +23,7 @@ public partial class Login : ContentPage
 
         using (var client = new HttpClient())
         {
-            var url = "https://localhost:7144/Usuario/ListarUsuarios";
+            var url = "https://localhost:7274/Usuario/ListarUsuarios";
             var response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {

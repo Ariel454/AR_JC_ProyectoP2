@@ -38,7 +38,7 @@ namespace AR_JC_ProyectoP2
 
             using (var client = new HttpClient())
             {
-                var url = "https://localhost:7144/Resena/ListarResenas";
+                var url = "https://localhost:7274/Resena/ListarResenas";
                 var response = await client.GetAsync(url);
 
                 if (response.IsSuccessStatusCode)

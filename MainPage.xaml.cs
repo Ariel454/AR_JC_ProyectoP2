@@ -28,7 +28,7 @@ namespace AR_JC_ProyectoP2
                 
                 using (var httpClient = new HttpClient())
                 {
-                    var url = "https://localhost:7144/Pelicula/ListarPeliculas";
+                    var url = "https://localhost:7274/Pelicula/ListarPeliculas";
                     var response = await httpClient.GetAsync(url);
 
                     if (response.IsSuccessStatusCode)

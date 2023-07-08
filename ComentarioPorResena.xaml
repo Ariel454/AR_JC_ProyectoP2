@@ -11,11 +11,19 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <!-- Mostrar el título de la reseña -->
-                <Label Text="{Binding Resena.titulo}" HorizontalOptions="Start" FontSize="Large" FontAttributes="Bold" />
+                <Frame BackgroundColor="White"
+                       CornerRadius="5"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="FillAndExpand">
+                    <StackLayout>
+                        <!-- Mostrar el título de la reseña -->
+                        <Label Text="{Binding Resena.titulo}" HorizontalOptions="Start" FontSize="Large" FontAttributes="Bold" TextColor="Black" />
 
-                <!-- Mostrar el texto de la reseña -->
-                <Label Text="{Binding Resena.descripcion}" HorizontalOptions="Start"/>
+                        <!-- Mostrar el texto de la reseña -->
+                        <Label Text="{Binding Resena.descripcion}" HorizontalOptions="Start" TextColor="Black"/>
+                    </StackLayout>
+                </Frame>
+                <Label Text="Comentarios" HorizontalOptions="Start" FontAttributes="Bold" FontSize="Large" />
 
                 <!-- Mostrar los comentarios de la reseña -->
                 <CollectionView SelectionMode="Single" ItemsSource="{Binding Resena.comentarios}" x:Name="coleccion">

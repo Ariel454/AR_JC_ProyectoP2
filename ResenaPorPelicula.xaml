@@ -32,6 +32,8 @@
                     <WebView x:Name="webView" HeightRequest="200" WidthRequest="400" />
                 </StackLayout>
 
+                <Label Text="Reseñas:" HorizontalOptions="Start" FontAttributes="Bold"/>
+
                 <!-- Mostrar las reseñas de la película -->
                 <CollectionView SelectionMode="Single" ItemsSource="{Binding Pelicula.resenas}" x:Name="coleccion">
                     <CollectionView.ItemTemplate>
