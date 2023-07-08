@@ -7,7 +7,6 @@
         <local:ResenaPorPeliculaViewModel />
     </ContentPage.BindingContext>
 
-
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
@@ -20,16 +19,29 @@
                 <!-- Mostrar la descripción de la película -->
                 <Label Text="{Binding Pelicula.descripcion}" HorizontalOptions="Center" FontSize="18" />
 
+                <!-- Mostrar la descripción de la película -->
+                <Label Text="{Binding Pelicula.genero}" HorizontalOptions="Center" FontSize="18" />
+
+                <Label Text="{Binding Pelicula.anio}" HorizontalOptions="Center" FontSize="18" />
+
+                <!-- Botón para ver el trailer -->
+                <Button Text="Ver trailer" Clicked="ButtonVerTrailer_Clicked" />
+
+                <StackLayout>
+                    <Label Text="Trailer de la película" FontSize="20" />
+                    <WebView x:Name="webView" HeightRequest="200" WidthRequest="400" />
+                </StackLayout>
+
                 <!-- Mostrar las reseñas de la película -->
                 <CollectionView SelectionMode="Single" ItemsSource="{Binding Pelicula.resenas}" x:Name="coleccion">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout >
+                            <StackLayout>
                                 <Frame BorderColor="Green"
-                                    CornerRadius="5"
-                                    HasShadow="True"
-                                    VerticalOptions="CenterAndExpand"
-                                    HorizontalOptions="FillAndExpand">
+                                       CornerRadius="5"
+                                       HasShadow="True"
+                                       VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="FillAndExpand">
                                     <StackLayout>
                                         <Label Text="{Binding titulo}" FontAttributes="Bold" FontSize="Medium"/>
                                         <Label Text="{Binding idUserPNavigation.nombre, StringFormat='Autor: {0}'}"/>
@@ -41,7 +53,6 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
