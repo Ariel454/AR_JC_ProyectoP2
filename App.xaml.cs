@@ -1,11 +1,16 @@
-﻿namespace AR_JC_ProyectoP2;
-
-public partial class App : Application
+﻿namespace AR_JC_ProyectoP2
 {
-	public App()
-	{
-		InitializeComponent();
+    public partial class App : Application
+    {
+        public static LogRepository LogRepo { get; private set; }
 
-		MainPage = new AppShell();
-	}
+        public App(LogRepository repo)
+        {
+            InitializeComponent();
+
+            MainPage = new AppShell();
+
+            LogRepo = repo;
+        }
+    }
 }

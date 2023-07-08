@@ -20,29 +20,32 @@ public partial class Login : ContentPage
     {
         string user = UserNameEntry.Text;
         string pass = passwordEntry.Text;
+
         using (var client = new HttpClient())
         {
-            var url = "https://localhost:7171/Usuario/listar";
+            var url = "https://localhost:7144/Usuario/ListarUsuarios";
             var response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                var listaUsuarios = JsonConvert.DeserializeObject<List<Usuario>>(content);
-                var usuario = listaUsuarios.FirstOrDefault(u => u.NombreUsuario == user && u.Contrasenia == pass);
+                var listaUsuarios = JsonConvert.DeserializeObject<List<listaUsuarios>>(content);
+                listaUsuarios usuario = listaUsuarios.FirstOrDefault(u => u.nombreUsuario == user && u.contrasenia == pass);
+
                 if (usuario != null)
                 {
-                    // Datos de usuario válidos, navegar a la siguiente página
-                    switch (usuario.Rol)
+
+                    if (usuario.rol == 2)
                     {
-                        case 0:
-                            await Navigation.PushAsync(new GestionUsuarios(usuario));
-                            break;
-                        case 2:
-                            await Navigation.PushAsync(new MainPage(usuario));
-                            break;
-                        default:
-                            await DisplayAlert("Alerta", "Usted no es administrador.", "OK");
-                            break;
+                        await Navigation.PushAsync(new MainPage(usuario));
+                    }
+                    else if (usuario.rol == 0)
+                    {
+                        await Navigation.PushAsync(new VistaLog());
+                    }
+                    else
+                    {
+                        // Credenciales inválidas, mostrar mensaje de error
+                        await DisplayAlert("Error", "Usuario no autorizado", "OK");
                     }
                 }
                 else
@@ -53,6 +56,7 @@ public partial class Login : ContentPage
             }
         }
     }
+
 
 
     async void OnRegisterButtonClicked(object sender, EventArgs e)

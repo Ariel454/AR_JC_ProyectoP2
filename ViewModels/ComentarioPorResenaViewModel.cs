@@ -4,34 +4,34 @@ using System.ComponentModel;
 using AR_JC_ProyectoP2.Models;
 namespace AR_JC_ProyectoP2.ViewModels
 {
-    public class ResenaPorPeliculaViewModel : INotifyPropertyChanged
+    public class ComentarioPorResenaViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private listaPelicula _pelicula;
-        public listaPelicula Pelicula
+        private listaResena _resena;
+        public listaResena Resena
         {
-            get { return _pelicula; }
+            get { return _resena; }
             set
             {
-                if (_pelicula != value)
+                if (_resena != value)
                 {
-                    _pelicula = value;
-                    OnPropertyChanged(nameof(Pelicula));
+                    _resena = value;
+                    OnPropertyChanged(nameof(Resena));
                 }
             }
         }
 
-        private List<listaResena> _resenas;
-        public List<listaResena> Resenas
+        private List<listaComentario> _comentario;
+        public List<listaComentario> Comentario
         {
-            get { return _resenas; }
+            get { return _comentario; }
             set
             {
-                if (_resenas != value)
+                if (_comentario != value)
                 {
-                    _resenas = value;
-                    OnPropertyChanged(nameof(Resenas));
+                    _comentario = value;
+                    OnPropertyChanged(nameof(Comentario));
                 }
             }
         }

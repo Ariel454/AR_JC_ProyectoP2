@@ -17,18 +17,6 @@
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
 
-    <TabBar>
-            <ShellContent
-            Title="Añadir peliculas"
-            ContentTemplate="{DataTemplate local:CrearPelicula}"
-            Route="CrearPelicula" />
-            
-            <ShellContent
-            Title="Gestionar peliculas"
-            ContentTemplate="{DataTemplate local:GestionarPeliculas}"
-            Route="GestionarPeliculas" />
-    </TabBar>
-
     <ShellContent
             Title="Registrarse"
             ContentTemplate="{DataTemplate local:RegisterPage}"

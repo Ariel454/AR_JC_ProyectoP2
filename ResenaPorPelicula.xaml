@@ -1,33 +1,48 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:AR_JC_ProyectoP2.Models"
-             xmlns:vm="clr-namespace:AR_JC_ProyectoP2.ViewModels"
+             xmlns:local="clr-namespace:AR_JC_ProyectoP2.ViewModels"
              x:Class="AR_JC_ProyectoP2.ResenaPorPelicula">
 
     <ContentPage.BindingContext>
-        <vm:ResenaPorPeliculaViewModel />
+        <local:ResenaPorPeliculaViewModel />
     </ContentPage.BindingContext>
+
 
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
                 <!-- Mostrar el título centrado de la película -->
-                <Label Text="{Binding Pelicula.Nombre}" HorizontalOptions="Center" FontSize="42" FontAttributes="Bold" />
+                <Label Text="{Binding Pelicula.nombre}" HorizontalOptions="Center" FontSize="42" FontAttributes="Bold" />
 
                 <!-- Mostrar el póster de la película -->
-                <Image Source="{Binding Pelicula.Poster}" WidthRequest="200" HeightRequest="320" HorizontalOptions="Center" />
+                <Image Source="{Binding Pelicula.poster}" WidthRequest="200" HeightRequest="320" HorizontalOptions="Center" />
 
                 <!-- Mostrar la descripción de la película -->
-                <Label Text="{Binding Pelicula.Descripcion}" HorizontalOptions="Center" FontSize="18" />
+                <Label Text="{Binding Pelicula.descripcion}" HorizontalOptions="Center" FontSize="18" />
 
-                <!-- Agregar aquí el código para mostrar otros objetos del proyecto -->
-                
-                
+                <!-- Mostrar las reseñas de la película -->
+                <CollectionView SelectionMode="Single" ItemsSource="{Binding Pelicula.resenas}" x:Name="coleccion">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout >
+                                <Frame BorderColor="Green"
+                                    CornerRadius="5"
+                                    HasShadow="True"
+                                    VerticalOptions="CenterAndExpand"
+                                    HorizontalOptions="FillAndExpand">
+                                    <StackLayout>
+                                        <Label Text="{Binding titulo}" FontAttributes="Bold" FontSize="Medium"/>
+                                        <Label Text="{Binding idUserPNavigation.nombre, StringFormat='Autor: {0}'}"/>
+                                        <Label Text="{Binding descripcion}"/>
+                                        <Button x:Name="btnResponder" Text="Responder"  Clicked="BtnResponder_Clicked" WidthRequest="100" HorizontalOptions="Start"/>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
-        
-
 </ContentPage>

@@ -10,6 +10,6 @@
         <Entry Placeholder="Contraseña" IsPassword="True" x:Name="passwordEntry" />
         <Entry Placeholder="Confirmar contraseña" IsPassword="True" x:Name="confirmPasswordEntry" />
 
-        <Button Text="Registrarse" Clicked="OnRegisterButtonClicked" />
+        <Button Text="Registrarse" Clicked="Button_Clicked" />
     </StackLayout>
 </ContentPage>

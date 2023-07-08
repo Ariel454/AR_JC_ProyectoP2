@@ -1,69 +1,63 @@
 using AR_JC_ProyectoP2.Data;
 using AR_JC_ProyectoP2.Models;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace AR_JC_ProyectoP2;
 
 public partial class RegisterPage : ContentPage
 {
-	public RegisterPage()
-	{
-		InitializeComponent();
-	}
+    public RegisterPage()
+    {
+        InitializeComponent();
+    }
 
-    void OnRegisterButtonClicked(object sender, EventArgs e)
+    private async void Button_Clicked(object sender, EventArgs e)
     {
         string NombreUsuario = UserNameEntry.Text;
         string Nombre = NombreEntry.Text;
         string Contrasenia = passwordEntry.Text;
         string ConfirmPassword = confirmPasswordEntry.Text;
         string Correo = emailEntry.Text;
-        int Rol=2;
 
-        // Validar que los campos no estén vacíos y que las contraseñas coincidan
         if (string.IsNullOrWhiteSpace(NombreUsuario) || string.IsNullOrWhiteSpace(Contrasenia) || string.IsNullOrWhiteSpace(ConfirmPassword))
         {
-            DisplayAlert("Error", "Por favor, completa todos los campos.", "OK");
+            await DisplayAlert("Error", "Por favor, completa todos los campos.", "OK");
             return;
         }
 
         if (Contrasenia != ConfirmPassword)
         {
-            DisplayAlert("Error", "Las contraseñas no coinciden.", "OK");
+            await DisplayAlert("Error", "Las contraseñas no coinciden.", "OK");
             return;
         }
 
-        using (var context = new ApplicationDbContext())
+        var newUsuario = new listaUsuarios
         {
+            nombreUsuario = NombreUsuario,
+            nombre = Nombre,
+            contrasenia = Contrasenia,
+            correo = Correo,
+            rol = 2
+        };
 
-            bool usuarioExistente = context.Usuario.Any(u => u.NombreUsuario == NombreUsuario);
-            bool correoExistente = context.Usuario.Any(u => u.Correo == Correo);
-            if (usuarioExistente) 
+        var json = JsonConvert.SerializeObject(newUsuario);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        using (var client = new HttpClient())
+        {
+            var url = "https://localhost:7144/Usuario/RegistrarUsuario?Nombre=" + Nombre + "&Rol=2&NombreUser=" + NombreUsuario + "&Contrasena=" + Contrasenia + "&Correo=" + Correo;
+            var response = await client.PostAsync(url, content);
+
+            if (response.IsSuccessStatusCode)
             {
-                DisplayAlert("Error", "El nombre de usuario ya existe, por favor escriba uno nuevo.", "OK");
-                return;
+                await DisplayAlert("Éxito", "El registro se realizó correctamente, por favor inicie sesión.", "OK");
+                await Navigation.PushAsync(new Login());
             }
-
-            if (correoExistente)
+            else
             {
-                DisplayAlert("Error", "El correo ya está registrado, por favor ingrese uno nuevo o inicie sesión.", "OK");
-                return;                
+                await DisplayAlert("Error", "Error al crear el usuario. Por favor, intenta nuevamente.", "OK");
             }
-
-            var newUsuario = new Usuario
-            {
-                NombreUsuario = NombreUsuario,
-                Nombre = Nombre,
-                Contrasenia = Contrasenia,
-                Correo = Correo,
-                Rol = Rol
-            };
-
-            context.Usuario.Add(newUsuario);
-            context.SaveChanges();
         }
-
-        DisplayAlert("Éxito", "El registro se realizó correctamente.", "OK");
-        Navigation.PopAsync();
     }
-
 }

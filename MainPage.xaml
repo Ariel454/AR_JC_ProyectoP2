@@ -1,35 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AR_JC_ProyectoP2.MainPage">
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:vm="clr-namespace:AR_JC_ProyectoP2.ViewModels"
+                   x:Class="AR_JC_ProyectoP2.MainPage">
+    <ContentPage.BindingContext>
+        <vm:ResenaPorPeliculaViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout>
-                <Label Text="Bienvenido," FontSize="24" />
-                <Label x:Name="NombreLabel" FontSize="18" />
+            <StackLayout HorizontalOptions="Center">
+                <Label Text="Bienvenido," FontSize="24" HorizontalOptions="Center" />
+                <Label x:Name="NombreLabel" FontSize="18" HorizontalOptions="Center" />
                 <!-- Aquí puedes agregar elementos de interfaz de usuario para las operaciones CRUD -->
                 <CollectionView x:Name="collectionView">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Vertical">
-                                <Image Source="{Binding Poster}" WidthRequest="200" HeightRequest="320" />
-                                <Label Text="{Binding Nombre}"/>
-                                <Button Text="Publicar reseña" Clicked="Button_Clicked" />
+                                <Image Source="{Binding poster}" WidthRequest="200" HeightRequest="320" HorizontalOptions="Center" />
+                                <Label Text="{Binding nombre}" HorizontalOptions="Center" />
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Button Text="Ver reseñas" Clicked="ButtonVer_Clicked" />
+                                    <Button Text="Publicar reseña" Clicked="Button_Clicked" />
+                                </StackLayout>
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-
-
-                <!--
-                <Button Text="Agregar Pelicula" Clicked="OnCrearPeliculaClicked" />
-                <Button Text="Editar Pelicula" Clicked="OnEditUserClicked" />
-                <Button Text="Eliminar Pelicula" Clicked="OnDeleteUserClicked" />
-                <Button Text="Gestionar Peliculas" Clicked="OnDeleteUserClicked" />
-                -->
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>
-
 

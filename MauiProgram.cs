@@ -13,6 +13,9 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		return builder.Build();
+        string dbPath = FileAccessHelper.GetLocalFilePath("log.db3");
+        builder.Services.AddSingleton<LogRepository>(s => ActivatorUtilities.CreateInstance<LogRepository>(s, dbPath));
+
+        return builder.Build();
 	}
 }

@@ -1,60 +1,79 @@
 using AR_JC_ProyectoP2.Data;
 using AR_JC_ProyectoP2.Models;
-namespace AR_JC_ProyectoP2;
+using Newtonsoft.Json;
+using System.Diagnostics;
+using System.Net.Http;
+using System.Text;
 
-public partial class CrearResena : ContentPage
+namespace AR_JC_ProyectoP2
 {
-    public Pelicula pelicula;
-    public Usuario usuario;
-    private ApplicationDbContext context;
-    public CrearResena(Pelicula peli, Usuario user)
+    public partial class CrearResena : ContentPage
     {
-        InitializeComponent();
-        context = new ApplicationDbContext();
-        this.pelicula = peli;
-        this.usuario = user;
-    }
-    private void OnRolPickerSelectedIndexChanged(object sender, EventArgs e)
-    {
+        public listaPelicula pelicula;
+        public listaUsuarios usuario;
+        private ApplicationDbContext context;
 
-    }
-
-    private void OnCreateClicked(object sender, EventArgs e)
-    {
-        // Obtener los valores ingresados en los Entry y el Picker
-        string Titulo = TituloEntry.Text;
-        string Texto = TextoEntry.Text;
-        int IdPelicula = pelicula.IdPelicula;
-        int ID_User = usuario.ID_User;
-        // Validar que los campos no estén vacíos y que las contraseñas coincidan
-        if (string.IsNullOrWhiteSpace(Titulo) || string.IsNullOrWhiteSpace(Texto))
+        public CrearResena(listaPelicula peli, listaUsuarios user)
         {
-            DisplayAlert("Error", "Por favor, completa todos los campos.", "OK");
-            return;
+            InitializeComponent();
+            context = new ApplicationDbContext();
+            this.pelicula = peli;
+            this.usuario = user;
         }
 
-        using (var context = new ApplicationDbContext())
+        private async void OnCreateClicked(object sender, EventArgs e)
         {
-            var newResena = new Resena
+            // Obtener los valores ingresados en los Entry
+            string Titulo = TituloEntry.Text;
+            string Texto = TextoEntry.Text;
+            int IdPelicula = pelicula.idPelicula;
+            int ID_User = usuario.idUser;
+
+            // Validar que los campos no estén vacíos
+            if (string.IsNullOrWhiteSpace(Titulo) || string.IsNullOrWhiteSpace(Texto))
             {
-                Titulo = Titulo,
-                Texto = Texto,
-                IdPeliculaP = IdPelicula,
-                ID_UserP = ID_User
+                await DisplayAlert("Error", "Por favor, completa todos los campos.", "OK");
+                return;
+            }
+
+            var newResena = new listaResena
+            {
+                titulo = Titulo,
+                descripcion = Texto,
+                idPeliculaP = IdPelicula,
+                idUserP = ID_User
             };
 
-            context.Resena.Add(newResena);
-            context.SaveChanges();
+            var json = JsonConvert.SerializeObject(newResena);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            DisplayAlert("Éxito", "La reseña se publicó correctamente.", "OK");
-            Navigation.PopAsync();
-            Navigation.PushAsync(new ResenaPorPelicula(pelicula));
+            using (var client = new HttpClient())
+            {
+                var url = "https://localhost:7144/Resena/AnadirResena?Titulo="+Titulo+"&Descripcion="+Texto+"&idPeliculaP="+IdPelicula+"&idUserP="+ID_User;
+                var response = await client.PostAsync(url, content);
 
+                if (response.IsSuccessStatusCode)
+                {
+                    var url2 = "https://localhost:7144/Resena/ListarResenas";
+                    var response2 = await client.GetAsync(url2);
+                    if (response2.IsSuccessStatusCode)
+                    {
+                        var content2 = await response2.Content.ReadAsStringAsync();
+                        var listaResenas = JsonConvert.DeserializeObject<List<listaResena>>(content2);
+                        listaResena res = listaResenas.LastOrDefault();
+                        int nuevaResenaId = res.idResena;
+                        await App.LogRepo.AddNewLog(nuevaResenaId);
+                        await DisplayAlert("Éxito", "La reseña se creó correctamente. IdNuevo: " + nuevaResenaId, "OK");
+                        await Navigation.PushAsync(new ResenaPorPelicula(pelicula, usuario));
+                    }
+
+                    
+                }
+                else
+                {
+                    await DisplayAlert("Error", "Error al crear la reseña. Por favor, intenta nuevamente.", "OK");
+                }
+            }
         }
-        /*ESTO LO BORRÉ PORQUE ESTOY PROBANDO EL ORDEN DEL FINAL PARA RECUPERAR EL USUARIO Y LA PELI
-        DisplayAlert("Éxito", "La pelicula se publicó correctamente.", "OK");
-        Navigation.PopAsync();
-        Navigation.PushAsync(new ResenaPorPelicula());
-        */
     }
 }

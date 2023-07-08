@@ -1,0 +1,53 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AR_JC_ProyectoP2.ViewModels"
+             x:Class="AR_JC_ProyectoP2.ComentarioPorResena">
+
+    <ContentPage.BindingContext>
+        <local:ComentarioPorResenaViewModel />
+    </ContentPage.BindingContext>
+
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <!-- Mostrar el título de la reseña -->
+                <Label Text="{Binding Resena.titulo}" HorizontalOptions="Start" FontSize="Large" FontAttributes="Bold" />
+
+                <!-- Mostrar el texto de la reseña -->
+                <Label Text="{Binding Resena.descripcion}" HorizontalOptions="Start"/>
+
+                <!-- Mostrar los comentarios de la reseña -->
+                <CollectionView SelectionMode="Single" ItemsSource="{Binding Resena.comentarios}" x:Name="coleccion">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout >
+                                <Frame BorderColor="Green"
+                                    CornerRadius="5"
+                                    HasShadow="True"
+                                    VerticalOptions="CenterAndExpand"
+                                    HorizontalOptions="FillAndExpand">
+                                    <StackLayout>
+                                        <Label Text="{Binding idUserFNavigation.nombre}"/>
+                                        <Label Text="{Binding fechaComentario}"/>
+                                        <Label Text="{Binding cuerpo}" />
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Frame BorderColor="Blue"
+                    CornerRadius="5"
+                    HasShadow="True"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="FillAndExpand">
+                    <StackLayout>
+                        <Editor x:Name="BodyEditor" Placeholder="Ingrese el cuerpo del comentario" HeightRequest="150" />
+                        <Button Text="Enviar" Clicked="Enviar_Clicked" />
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

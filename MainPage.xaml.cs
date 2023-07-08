@@ -1,68 +1,87 @@
 ﻿using AR_JC_ProyectoP2.Data;
 using AR_JC_ProyectoP2.Models;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 
-namespace AR_JC_ProyectoP2;
-
-public partial class MainPage : ContentPage
+namespace AR_JC_ProyectoP2
 {
-    private ApplicationDbContext context;
-    private List<Pelicula> listaPeliculas;
-    private Pelicula pelicula;
-    private Usuario usuario;
-    public MainPage(Usuario usuario)
+    public partial class MainPage : ContentPage
     {
-        InitializeComponent();
-        // Obtener las películas de la base de datos local
-        listaPeliculas = ObtenerPeliculas();
+        private List<listaPelicula> listaPeliculas;
+        private listaUsuarios usuario;
 
-        // Establecer el origen de datos para la colección de películas
-        collectionView.ItemsSource = listaPeliculas;
-
-        this.pelicula = pelicula;
-        this.usuario = usuario;
-    }
-
-
-
-    private async void Button_Clicked(object sender, EventArgs e)
-    {
-        var button = (Button)sender;
-        var pelicula = button.BindingContext as Pelicula;
-        if (pelicula != null)
+        public MainPage(listaUsuarios usuario)
         {
-            await Navigation.PushAsync(new CrearResena(pelicula, usuario));
+            InitializeComponent();
+            this.usuario = usuario;
+            ObtenerPeliculas();
         }
-        //var usuario = ObtenerUsuarioActual(); // Reemplaza ObtenerUsuarioActual() con la lógica para obtener el usuario actual
 
-
-    }
-
-
-
-
-    private List<Pelicula> ObtenerPeliculas()
-    {
-        using (var context = new ApplicationDbContext())
+        private async void ObtenerPeliculas()
         {
-            return context.Peliculas.ToList();
+            List<listaPelicula> listaPeliculas = new List<listaPelicula>();
+
+            try
+            {
+                
+                using (var httpClient = new HttpClient())
+                {
+                    var url = "https://localhost:7144/Pelicula/ListarPeliculas";
+                    var response = await httpClient.GetAsync(url);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+                        listaPeliculas = JsonConvert.DeserializeObject<List<listaPelicula>>(content);
+                        collectionView.ItemsSource = listaPeliculas;
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error", "No se pudo obtener la lista de películas.", "OK");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
+            }
         }
-    }
 
 
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            listaPelicula pelicula = button.BindingContext as listaPelicula;
+            if (pelicula != null)
+            {
+                await Navigation.PushAsync(new CrearResena(pelicula, usuario));
+            }
+        }
 
-    private void OnUserSelected(object sender, SelectedItemChangedEventArgs e)
-    {
-        // Obtener el usuario seleccionado en el ListView
-        var usuarioSeleccionado = (Usuario)e.SelectedItem;
+        private async void ButtonVer_Clicked(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            listaPelicula pelicula = button.BindingContext as listaPelicula;
+            if (pelicula != null)
+            {
+                await Navigation.PushAsync(new ResenaPorPelicula(pelicula, usuario));
+            }
+        }
 
-        // Realizar alguna acción con el usuario seleccionado
-        // Ejemplo: mostrar los detalles del usuario en una página de detalles
-        //Navigation.PushAsync(new DetallesUsuario(usuarioSeleccionado));
-    }
+        private void OnUserSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var usuarioSeleccionado = (listaUsuarios)e.SelectedItem;
+            // Realizar alguna acción con el usuario seleccionado
+            // Ejemplo: mostrar los detalles del usuario en una página de detalles
+            // Navigation.PushAsync(new DetallesUsuario(usuarioSeleccionado));
+        }
 
-    private void OnCrearPeliculaClicked(object sender, EventArgs e)
-    {
-
+        private void OnCrearPeliculaClicked(object sender, EventArgs e)
+        {
+            // Implementa la funcionalidad para crear una nueva película
+        }
     }
 }
 
