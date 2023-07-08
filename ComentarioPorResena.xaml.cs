@@ -55,6 +55,7 @@ public partial class ComentarioPorResena : ContentPage
         // Obtener los valores ingresados en los Entry
         string cuerpo = BodyEditor.Text;
         DateTime fechaComentario = DateTime.Now;
+        string fechaComentarioFormatted = fechaComentario.ToString("yyyy-MM-ddTHH:mm:ss");
         int IdResena = res.idResena;
         int ID_User = user.idUser;
 
@@ -78,8 +79,9 @@ public partial class ComentarioPorResena : ContentPage
 
         using (var client = new HttpClient())
         {
+            await DisplayAlert("Éxito", "fecha: "+fechaComentario.ToString(), "OK");
             //ARREGLAR LA FECHA SI ES QUE QUIERO QUE FUNCIONE JEJEX
-            var url = "https://localhost:7144/Comentario/AgregarComentario?idUsuario="+ID_User+"&idResena="+IdResena+"&Cuerpo="+cuerpo+"&FechaComentario=2023-02-15";
+            var url = "https://localhost:7144/Comentario/AgregarComentario?idUsuario=" + ID_User + "&idResena=" + IdResena + "&Cuerpo=" + cuerpo + "&FechaComentario=" + fechaComentarioFormatted;
             var response = await client.PostAsync(url, content);
 
             if (response.IsSuccessStatusCode)
